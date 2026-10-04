@@ -1,0 +1,168 @@
+
+André Avila Gomes <enzoavila1972@gmail.com>
+15:36 (há 5 minutos)
+para mim
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Desconto Interativa</title>
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --error-color: #dc2626;
+      --success-color: #16a34a;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: var(--primary-color);
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    #resultado {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 4px;
+      display: none;
+      text-align: center;
+    }
+
+    .sucesso {
+      background-color: #dcfce7;
+      color: var(--success-color);
+      border: 1px solid #86efac;
+    }
+
+    .erro {
+      background-color: #fee2e2;
+      color: var(--error-color);
+      border: 1px solid #fca5a5;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+    <header>
+      <h1>Calculadora de Desconto</h1>
+    </header>
+
+    <form id="descontoForm" onsubmit="event.preventDefault();">
+      <div class="form-group">
+        <label for="preco">Preço Original (€):</label>
+        <input type="number" id="preco" step="0.01" placeholder="Ex: 50.00" required>
+      </div>
+
+      <div class="form-group">
+        <label for="percentagem">Percentagem de Desconto (%):</label>
+        <input type="number" id="percentagem" min="0" max="100" placeholder="Ex: 20" required>
+      </div>
+
+      <button type="button" id="btnCalcular">Calcular Desconto</button>
+    </form>
+
+    <section id="resultado" aria-live="polite"></section>
+  </main>
+
+  <script>
+    // Seleção dos elementos do DOM
+    const btnCalcular = document.getElementById('btnCalcular');
+    const resultadoDiv = document.getElementById('resultado');
+
+    // Função de cálculo e validação
+    function calcularDesconto() {
+      // Obtenção dos valores dos campos (variáveis)
+      const preco = parseFloat(document.getElementById('preco').value);
+      const percentagem = parseFloat(document.getElementById('percentagem').value);
+
+      // Validação das entradas
+      if (isNaN(preco) || isNaN(percentagem) || preco <= 0 || percentagem < 0 || percentagem > 100) {
+        resultadoDiv.className = 'erro';
+        resultadoDiv.style.display = 'block';
+        resultadoDiv.textContent = 'Por favor, insira valores válidos (Preço > 0 e Desconto entre 0% e 100%).';
+        return;
+      }
+
+      // Cálculo do desconto
+      const valorDesconto = (preco * percentagem) / 100;
+      const precoFinal = preco - valorDesconto;
+
+      // Alteração dinâmica do conteúdo da página
+      resultadoDiv.className = 'sucesso';
+      resultadoDiv.style.display = 'block';
+      resultadoDiv.innerHTML = `
+        <p>Valor do Desconto: <strong>${valorDesconto.toFixed(2)} €</strong></p>
+        <p>Preço Final: <strong>${precoFinal.toFixed(2)} €</strong></p>
+      `;
+    }
+
+    // Evento de clique no botão
+    btnCalcular.addEventListener('click', calcularDesconto);
+  </script>
+
+</body>
+</html>
+
