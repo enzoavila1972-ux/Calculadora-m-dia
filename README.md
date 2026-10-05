@@ -1,8 +1,4 @@
 
-André Avila Gomes <enzoavila1972@gmail.com>
-15:36 (há 5 minutos)
-para mim
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
